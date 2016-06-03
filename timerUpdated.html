@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Count Down Timer </title>
+</head>
+<body style = "background-color : lightGreen">
+<h1 style = "color : red; text-align : center"> Count Down Timer </h1> 
+<form style = "text-align : center;">
+Days : <br>
+<input type="text" value="0" id="days" > </input>
+<br><br>
+Hours : <br>
+<input type="text" value="0" id="hours">  </input>
+<br><br>
+Minutes : <br>
+<input type="text" value="0" id="minutes"> </input>
+<br><br>
+Seconds : <br>
+<input type="text" value="0" id="seconds"> </input>
+<br><br>
+<input type="button" onclick="set(); value='Reset'; " value="Set" 
+style = "background-color : blue; color : white; margin : 10px solid black;" onmouseover="change()"> </input>
+<br><br>
+<input type="button" onclick="clearInterval(atEnd); callSetInterval(countDown,1000);" value="Start"
+style = "background-color : blue; color : white; margin : 10px solid black;"> </input> 
+<br><br>
+<input type="button" onclick="stopTimer()" value="Stop"
+style = "background-color : blue; color : white; margin : 10px solid black;"> </input>
+</form>
+<br>
+<p id="timer" style="font-size : 50px; color : red; text-align : center;"> </p>
+
+<p id = "test" style="text-align : center; font-size : 30px; "> Days : Hours : Minutes : Seconds</p>
+
+
+<script>
+var days=0 , hours=0 , minutes=0 , seconds=0 , atEnd ; 
+
+function set() {
+clearInterval(atEnd);
+days=0; hours=0; minutes=0; seconds=0;
+days = document.getElementById("days").value;
+hours = document.getElementById("hours").value;
+minutes = document.getElementById("minutes").value;
+seconds = document.getElementById("seconds").value;
+if(seconds=="") seconds=0;
+if(minutes=="") minutes=0;
+if(hours=="") hours=0;
+if(days=="") days=0;
+while(seconds>=60) {
+    seconds -= 60;
+    minutes += 1;
+}
+while(minutes>=60) {
+    minutes -= 60;
+    hours += 1;
+}
+while(hours>=24) {
+    hours -= 24;
+    days += 1;
+}
+document.getElementById("timer").innerHTML = days + " : " + hours + " : "+ minutes + " : " + seconds + "<br>";
+}
+
+function callSetInterval() {
+atEnd = setInterval(countDown,1000);
+}
+
+function stopTimer() {
+clearInterval(atEnd);
+}
+
+function countDown() {
+document.getElementById("timer").innerHTML = days + " : " + hours + " : "+ minutes + " : " + seconds + "<br>";
+if(days >= 0) {
+seconds = seconds - 1;
+
+if(seconds < 0) {
+    minutes = minutes - 1;
+    seconds = seconds + 60;
+    }
+if(minutes < 0) {
+    hours = hours - 1;
+    minutes = minutes + 60;
+    }
+if(hours < 0) {
+    days = days - 1;
+    hours = hours + 24;
+    }
+}
+if(days < 0)
+{
+document.getElementById("timer").innerHTML = "Time's up!"
+clearInterval(atEnd);
+}
+}
+</script>
+</body>
+</html>
